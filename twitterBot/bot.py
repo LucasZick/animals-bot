@@ -39,28 +39,29 @@ def main():
     animals = get_animals()
     RandomAnimalMessageBuilder.add_animals(animals)
 
-    last_seen_tweet_id = int(redis_client.get('last_seen_tweet_id'))
-    logging.info(f"Starting from Tweet ID: {last_seen_tweet_id}.")
+    while True:
+        last_seen_tweet_id = int(redis_client.get('last_seen_tweet_id'))
+        logging.info(f"Starting from Tweet ID: {last_seen_tweet_id}.")
 
-    tweets = twitter_client.mentions_timeline(since_id=last_seen_tweet_id)
-    logging.info(f"Found {len(tweets)} to reply to.")
+        tweets = twitter_client.mentions_timeline(since_id=last_seen_tweet_id)
+        logging.info(f"Found {len(tweets)} to reply to.")
 
-    for tweet in reversed(tweets):
-        try:
-            logging.debug('Got tweet ID {tweet.id}.')
-            random_animal_message = RandomAnimalMessageBuilder.build_random_animal_message()
-            twitter_client.update_status(f"@{tweet.user.screen_name} {random_animal_message}", in_reply_to_status_id=tweet.id)
-        except BaseException as e:
-            logging.exception(f"Error while trying to reply to tweet ID {tweet.id}.")
-        finally:
-            redis_client.set('last_seen_tweet_id', tweet.id)
+        for tweet in reversed(tweets):
+            try:
+                logging.debug('Got tweet ID {tweet.id}.')
+                random_animal_message = RandomAnimalMessageBuilder.build_random_animal_message()
+                twitter_client.update_status(f"@{tweet.user.screen_name} {random_animal_message}", in_reply_to_status_id=tweet.id)
+            except BaseException as e:
+                logging.exception(f"Error while trying to reply to tweet ID {tweet.id}.")
+            finally:
+                redis_client.set('last_seen_tweet_id', tweet.id)
+
+        time.sleep(int(os.environ['LOOKUP_TIMEOUT']))
 
 def run():
-    while True:
-        try:
-            main()
-        except BaseException as e:
-            logging.exception(f"Your service is shutting down due to critical errors.")
-            os.kill(os.getppid(), signal.SIGTERM)
+    try:
+        main()
+    except BaseException as e:
+        logging.exception(f"Your service is shutting down due to critical errors.")
+        os.kill(os.getppid(), signal.SIGTERM)
         
-        time.sleep(int(os.environ['LOOKUP_TIMEOUT']))
