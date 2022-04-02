@@ -47,4 +47,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-    time.sleep(60)
+    time.sleep(os.environ['LOOKUP_FOR_NEWEST_MENTIONS_TIMEOUT'])
