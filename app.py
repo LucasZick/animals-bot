@@ -26,25 +26,25 @@ def get_animals():
         return list(map(lambda animal: animal.split('(')[0].strip(), file.readlines()))
 
 
-def _main_():
-    r = get_redis(os.environ['REDIS_URL'])
-    api = get_twitter(os.environ['API_KEY'], os.environ['API_SECRET_KEY'], os.environ['ACCESS_KEY'], os.environ['ACCESS_SECRET'])
+def main():
+    redis_client = get_redis(os.environ['REDIS_URL'])
+    twitter_client = get_twitter(os.environ['API_KEY'], os.environ['API_SECRET_KEY'], os.environ['ACCESS_KEY'], os.environ['ACCESS_SECRET'])
 
     animals = get_animals()
     RandomAnimalMessageBuilder.add_animals(animals)
 
-    last_seen_tweet_id = str(r.get('last_seen_tweet_id'))
-    tweets = api.mentions_timeline(since_id=last_seen_tweet_id)
+    last_seen_tweet_id = str(redis_client.get('last_seen_tweet_id'))
+    tweets = twitter_client.mentions_timeline(since_id=last_seen_tweet_id)
 
     print('deu bao')
     print('Ultimo ID pesquisado:' + last_seen_tweet_id)
 
     for tweet in reversed(tweets):
         random_animal_message = RandomAnimalMessageBuilder.build_random_animal_message()
-        r.set('last_seen_tweet_id', tweet.id)
-        api.update_status(f"@{tweet.user.screen_name} {random_animal_message}", in_reply_to_status_id=tweet.id)
+        redis_client.set('last_seen_tweet_id', tweet.id)
+        twitter_client.update_status(f"@{tweet.user.screen_name} {random_animal_message}", in_reply_to_status_id=tweet.id)
 
 
-while True:
-    _main_()
+if __name__ == '__main__':
+    main()
     time.sleep(60)
