@@ -13,6 +13,6 @@ def health():
 
 def start():
     Process(target=Bot.run).start()
-    app.run(port=int(os.environ.get('PORT', 8000)))
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8000)))
 
 start()
