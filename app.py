@@ -33,8 +33,7 @@ def _main_():
     for tweet in reversed(tweets):
         r.set('last_seen_id', tweet.id)
         genius_phrase = getRandomAnimal()
-        api.update_status('@' + tweet.user.screen_name + ' ' +
-                          genius_phrase, in_reply_to_status_id=tweet.id)
+        api.update_status(f"@{tweet.user.screen_name} {genius_phrase}", in_reply_to_status_id=tweet.id)
 
 
 while True:
