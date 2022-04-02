@@ -1,5 +1,4 @@
 import random
-from webbrowser import get
 
 
 def getRandomAnimal():
