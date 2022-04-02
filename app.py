@@ -1,8 +1,9 @@
-from os import read, write
-import tweepy
 import time
+
+import tweepy
+
 from getAnimal import getRandomAnimal
-from tokens import api_key, api_secret_key, access_key, access_secret
+from tokens import access_key, access_secret, api_key, api_secret_key
 
 auth = tweepy.OAuthHandler(api_key, api_secret_key)
 auth.set_access_token(access_key, access_secret)
