@@ -2,41 +2,36 @@ import time
 import os
 
 import tweepy
+from redis import Redis
 
 from getAnimal import getRandomAnimal
 
 
-auth = tweepy.OAuthHandler(os.environ['API_KEY'], os.environ['API_SECRET_KEY'])
-auth.set_access_token(os.environ['ACESS_KEY'], os.environ['ACCESS_SECRET'])
+def get_redis(redis_url):
+    instance = Redis.from_url(redis_url, ssl_cert_reqs=None)
 
-api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+    if not instance.ping():
+        raise ConnectionError('Redis instance is down.')
 
-
-FILE_NAME = 'last_seen.txt'
-
-
-def read_last_seen(FILE_NAME):
-    file_read = open(FILE_NAME, 'r')
-    last_seen_id = int(file_read.read().strip())
-    file_read.close()
-    return last_seen_id
+    return instance
 
 
-def store_last_seen(FILE_NAME, last_seen_id):
-    file_write = open(FILE_NAME, 'w')
-    file_write.write(str(last_seen_id))
-    file_write.close()
-    return
+def get_twitter(api_key, api_secret_key, access_key, access_secret):
+    auth = tweepy.OAuthHandler(api_key, api_secret_key, access_key, access_secret)
+
+    return tweepy.API(auth, wait_on_rate_limit=True)
 
 
 def _main_():
-    read_last_seen_str = str(read_last_seen(FILE_NAME))
-    tweets = api.mentions_timeline(
-        read_last_seen(FILE_NAME), tweet_mode='extended')
+    r = get_redis(os.environ['API_KEY'])
+    api = get_twitter(os.environ['API_KEY'], os.environ['API_SECRET_KEY'], os.environ['ACESS_KEY'], os.environ['ACCESS_SECRET'])
+
+    last_seen_tweet_id = str(r.get('last_seen_tweet_id'))
+    tweets = api.mentions_timeline(last_seen_tweet_id, tweet_mode='extended')
     print('deu bao')
-    print('Ultimo ID pesquisado:' + read_last_seen_str)
+    print('Ultimo ID pesquisado:' + last_seen_tweet_id)
     for tweet in reversed(tweets):
-        store_last_seen(FILE_NAME, tweet.id)
+        r.set('last_seen_id', tweet.id)
         genius_phrase = getRandomAnimal()
         api.update_status('@' + tweet.user.screen_name + ' ' +
                           genius_phrase, in_reply_to_status_id=tweet.id)
