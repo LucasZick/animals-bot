@@ -23,7 +23,7 @@ def get_twitter(api_key, api_secret_key, access_key, access_secret):
 
 
 def _main_():
-    r = get_redis(os.environ['API_KEY'])
+    r = get_redis(os.environ['REDIS_URL'])
     api = get_twitter(os.environ['API_KEY'], os.environ['API_SECRET_KEY'], os.environ['ACESS_KEY'], os.environ['ACCESS_SECRET'])
 
     last_seen_tweet_id = str(r.get('last_seen_tweet_id'))
