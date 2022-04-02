@@ -11,18 +11,10 @@ prefixos = [
     'É difícil ser assim? Um(a) '
 ]
 
+animals = []
+
 def getRandomAnimal():
-    arquivo = open('animals.txt', 'r', encoding="utf8")
-    animals = []
-    animalsReduct = []
-    for linha in arquivo:
-        linha = arquivo.readline()
-        animals.append(linha)
-    arquivo.close()
-    for animal in animals:
-        animalReduct = animal.split('(')
-        animalsReduct.append(animalReduct[0])
+    with open('animals.txt', 'r', encoding="utf8") as file:
+        animals = list(map(lambda animal: animal.split('(')[0], file.readlines()))
 
-    return(random.choice(prefixos) + random.choice(animalsReduct))
-
-print(getRandomAnimal())
+    return(random.choice(prefixos) + random.choice(animals))
