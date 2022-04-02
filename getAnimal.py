@@ -13,8 +13,11 @@ prefixos = [
 
 animals = []
 
-def getRandomAnimal():
+def load_animals():
     with open('animals.txt', 'r', encoding="utf8") as file:
         animals = list(map(lambda animal: animal.split('(')[0], file.readlines()))
 
-    return(random.choice(prefixos) + random.choice(animals))
+def get_random_animal():
+    if len(animals) == 0: load_animals()
+    
+    return random.choice(animals)

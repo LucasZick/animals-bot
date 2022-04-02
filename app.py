@@ -4,7 +4,7 @@ import os
 import tweepy
 from redis import Redis
 
-from getAnimal import getRandomAnimal
+from getAnimal import get_random_animal
 
 
 def get_redis(redis_url):
@@ -32,7 +32,7 @@ def _main_():
     print('Ultimo ID pesquisado:' + last_seen_tweet_id)
     for tweet in reversed(tweets):
         r.set('last_seen_id', tweet.id)
-        genius_phrase = getRandomAnimal()
+        genius_phrase = get_random_animal()
         api.update_status(f"@{tweet.user.screen_name} {genius_phrase}", in_reply_to_status_id=tweet.id)
 
 
