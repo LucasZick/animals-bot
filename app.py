@@ -46,5 +46,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
-    time.sleep(os.environ['LOOKUP_FOR_NEWEST_MENTIONS_TIMEOUT'])
+    while True:
+        main()
+        time.sleep(os.environ['LOOKUP_FOR_NEWEST_MENTIONS_TIMEOUT'])
