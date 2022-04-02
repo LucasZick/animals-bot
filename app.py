@@ -1,12 +1,13 @@
 import time
+import os
 
 import tweepy
 
 from getAnimal import getRandomAnimal
-from tokens import access_key, access_secret, api_key, api_secret_key
 
-auth = tweepy.OAuthHandler(api_key, api_secret_key)
-auth.set_access_token(access_key, access_secret)
+
+auth = tweepy.OAuthHandler(os.environ['API_KEY'], os.environ['API_SECRET_KEY'])
+auth.set_access_token(os.environ['ACESS_KEY'], os.environ['ACCESS_SECRET'])
 
 api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
