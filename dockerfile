@@ -1,4 +1,4 @@
-FROM python:alpine
+FROM python3:alpine
 
 WORKDIR /animals_bot
 
