@@ -1,8 +1,8 @@
 from multiprocessing import Process
 from flask import Flask
 
-from twitterBot.config import CONFIG
-import twitterBot.bot as Bot
+from animals_bot.config import CONFIG
+import animals_bot.bot as Bot
 
 app = Flask(__name__)
 

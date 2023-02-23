@@ -1,4 +1,4 @@
-## Twitter Bot
+## Animals Bot
 
 This is a simple Twitter bot that replies to mentions by calling the person who mentioned it as a random animal and returning a humorous insult. For example, the bot might reply to a mention by saying "You are as ugly as a dolphin."
 
@@ -19,7 +19,6 @@ This is a simple Twitter bot that replies to mentions by calling the person who 
     * `PORT`
     * `LOOKUP_TIMEOUT`
     * `LOGLEVEL`
-    * `DEBUG`
 8. Run the bot with `python3 bot.py`
 
 ### Configuration

@@ -6,8 +6,8 @@ import logging
 import tweepy
 from redis import Redis
 
-from twitterBot.MessageBuilders import RandomAnimalMessageBuilder
-from twitterBot.config import CONFIG
+from animals_bot.message_builder import RandomAnimalMessageBuilder
+from animals_bot.config import CONFIG
 
 
 print(CONFIG.LOGLEVEL)

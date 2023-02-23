@@ -1,1 +1,1 @@
-from twitterBot import __main__
+from animals_bot import __main__

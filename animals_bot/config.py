@@ -16,5 +16,3 @@ class CONFIG:
     LOOKUP_TIMEOUT = environ.get("LOOKUP_TIMEOUT", 30)
 
     LOGLEVEL = environ.get("LOGLEVEL", "INFO")
-
-    DEBUG = environ.get("DEBUG", False)
