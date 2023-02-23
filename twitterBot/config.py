@@ -9,14 +9,12 @@ class CONFIG:
         "ACCESS_SECRET": environ.get("ACCESS_SECRET", ""),
     }
 
-    REDIS_URL = environ.get("REDIS_URL") if environ.get("REDIS_URL","") != "" else False
+    REDIS_URL = environ.get("REDIS_URL", False)
 
-    PORT = environ.get("PORT") if environ.get("PORT", "") != "" else False
+    PORT = environ.get("PORT", False)
 
-    LOOKUP_TIMEOUT = (
-        environ.get("LOOKUP_TIMEOUT") if environ.get("LOOKUP_TIMEOUT", "") != "" else 5
-    )
+    LOOKUP_TIMEOUT = environ.get("LOOKUP_TIMEOUT", 5)
 
-    LOGLEVEL = environ.get("LOGLEVEL") if environ.get("LOGLEVEL", "") != "" else "INFO"
+    LOGLEVEL = environ.get("LOGLEVEL", "INFO")
 
-    DEBUG = environ.get("DEBUG") if environ.get("DEBUG", "") != "" else False
+    DEBUG = environ.get("DEBUG", False)
