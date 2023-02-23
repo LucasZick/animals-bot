@@ -4,7 +4,7 @@ This is a simple Twitter bot that replies to mentions by calling the person who 
 
 ### Installation
 
-1. Clone this repository: `git clone https://github.com/LucasZick/twitterBot.git`
+1. Clone this repository: `git clone https://github.com/LucasZick/animals-bot.git`
 2. Install the required dependencies by running `pip install -r requirements.txt`
 3. Create a new Twitter account or use an existing one
 4. Apply for a Twitter Developer account and create a new app

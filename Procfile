@@ -1,1 +1,1 @@
-web: python3 twitterBot
+web: python3 animals-bot
