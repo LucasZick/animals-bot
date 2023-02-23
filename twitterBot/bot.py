@@ -6,10 +6,12 @@ import logging
 import tweepy
 from redis import Redis
 
-from MessageBuilders import RandomAnimalMessageBuilder
+from twitterBot.MessageBuilders import RandomAnimalMessageBuilder
+from twitterBot.config import CONFIG
 
 
-logging.basicConfig(format='%(asctime)s [%(levelname)s]: %(message)s', level=os.environ.get('LOGLEVEL', 'INFO').upper())
+print(CONFIG.LOGLEVEL)
+logging.basicConfig(format='%(asctime)s [%(levelname)s]: %(message)s', level=CONFIG.LOGLEVEL.upper())
 
 def get_redis(redis_url):
     instance = Redis.from_url(redis_url, ssl_cert_reqs=False)
@@ -30,10 +32,10 @@ def get_animals():
         return list(map(lambda animal: animal.split('(')[0].strip(), file.readlines()))
 
 def main():
-    redis_client = get_redis(os.environ['REDIS_URL'])
+    redis_client = get_redis(CONFIG.REDIS_URL)
     logging.info('Connected to Redis!')
-
-    twitter_client = get_twitter(os.environ['API_KEY'], os.environ['API_SECRET_KEY'], os.environ['ACCESS_KEY'], os.environ['ACCESS_SECRET'])
+    
+    twitter_client = get_twitter(CONFIG.TWITTER['API_KEY'], CONFIG.TWITTER['API_SECRET_KEY'], CONFIG.TWITTER['ACCESS_KEY'], CONFIG.TWITTER['ACCESS_SECRET'])
     logging.info('Connected to Twitter!')
 
     animals = get_animals()
@@ -56,7 +58,7 @@ def main():
             finally:
                 redis_client.set('last_seen_tweet_id', tweet.id)
 
-        time.sleep(int(os.environ['LOOKUP_TIMEOUT']))
+        time.sleep(int(CONFIG.LOOKUP_TIMEOUT))
 
 def run():
     try:

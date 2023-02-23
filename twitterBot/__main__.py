@@ -1,9 +1,8 @@
-import os
 from multiprocessing import Process
-
 from flask import Flask
 
-import bot as Bot
+from twitterBot.config import CONFIG
+import twitterBot.bot as Bot
 
 app = Flask(__name__)
 
@@ -13,6 +12,6 @@ def health():
 
 def start():
     Process(target=Bot.run).start()
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8000)))
+    app.run(host='0.0.0.0', port=int(CONFIG.PORT))
 
 start()
