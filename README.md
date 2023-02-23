@@ -9,13 +9,13 @@ This is a simple Twitter bot that replies to mentions by calling the person who 
 3. Create a new Twitter account or use an existing one
 4. Apply for a Twitter Developer account and create a new app
 5. Generate API keys for the app
-6. Set the API keys as environment variables in your system with the following names (fields with double * are required):
-    ** `API_KEY`
-    ** `API_SECRET_KEY`
-    ** `ACCESS_KEY`
-    ** `ACCESS_SECRET`
-7. Set the application settings in your system with the following names (fields with double * are required):
-    ** `REDIS_URL`
+6. Set the API keys as environment variables in your system with the following names (fields marked with ~ are required):
+    * `~ API_KEY`
+    * `~ API_SECRET_KEY`
+    * `~ ACCESS_KEY`
+    * `~ ACCESS_SECRET`
+7. Set the application settings in your system with the following names (fields marked with ~ are required):
+    * `~ REDIS_URL`
     * `PORT`
     * `LOOKUP_TIMEOUT`
     * `LOGLEVEL`
