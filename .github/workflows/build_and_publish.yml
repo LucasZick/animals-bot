@@ -51,5 +51,5 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: vielitech/gump:${{ env.RELEASE_VERSION }}
+          tags: lucaszick/animals-bot:${{ env.RELEASE_VERSION }}
         
