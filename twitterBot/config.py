@@ -9,11 +9,11 @@ class CONFIG:
         "ACCESS_SECRET": environ.get("ACCESS_SECRET", ""),
     }
 
-    REDIS_URL = environ.get("REDIS_URL", False)
+    REDIS_URL = environ.get("REDIS_URL", "")
 
-    PORT = environ.get("PORT", False)
+    PORT = environ.get("PORT", 3030)
 
-    LOOKUP_TIMEOUT = environ.get("LOOKUP_TIMEOUT", 5)
+    LOOKUP_TIMEOUT = environ.get("LOOKUP_TIMEOUT", 30)
 
     LOGLEVEL = environ.get("LOGLEVEL", "INFO")
 
