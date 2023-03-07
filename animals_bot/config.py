@@ -18,4 +18,4 @@ class CONFIG:
     # NOTSET - DEBUG - INFO - WARN - ERROR - CRITICAL
     LOGLEVEL = environ.get("LOGLEVEL", "INFO")
 
-    TESTE = environ.get("TESTE", '')
+    TEST = environ.get("TEST", '')

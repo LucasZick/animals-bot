@@ -12,10 +12,11 @@ def health():
 
 def start():
     Process(target=Bot.run).start()
-    app.run(host="0.0.0.0", port=int(CONFIG.PORT))
+    if CONFIG.TEST != '':
+        app.run(host="0.0.0.0", port=int(CONFIG.PORT))
+    else:
+        from waitress import serve
+        serve(app, host="0.0.0.0", port=int(CONFIG.PORT))
 
-if CONFIG.TESTE != '':
+if  __name__ == "__main__":
     start()
-elif __name__ == "__main__":
-    from waitress import serve
-    serve(app, host="0.0.0.0", port=int(CONFIG.PORT))
