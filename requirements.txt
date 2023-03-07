@@ -18,6 +18,7 @@ requests
 requests-oauthlib
 tweepy
 urllib3
+waitress
 Werkzeug
 wrapt
 zipp
